@@ -38,6 +38,7 @@ para esto se incluye el respectivo map ```RumeauLibAppConfig\Entity\AppConfig```
 el que puede ser importado con:
  
 ```php vendor/doctrine/doctrine-module/bin/doctrine-module.php orm:schema-tool:update --dump-sql``` Para probar primero
+
 ```php vendor/doctrine/doctrine-module/bin/doctrine-module.php orm:schema-tool:update --force``` Para aplicar los cambios
 
 Esta entidad creara la respectiva tabla en su base de datos en 
