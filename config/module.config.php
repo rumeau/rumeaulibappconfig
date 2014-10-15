@@ -62,7 +62,7 @@ return [
 
     'doctrine' => [
         'driver' => [
-            // defines an annotation driver with two paths, and names it `my_annotation_driver`
+            // defines an annotation driver with two paths, and names it `rumeaulibappconfig_driver`
             'rumeaulibappconfig_driver' => [
                 'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
                 'cache' => 'array',
@@ -75,7 +75,7 @@ return [
             // Override `orm_default` only if you know what you're doing
             'orm_default' => [
                 'drivers' => [
-                    // register `my_annotation_driver` for any entity under namespace `My\Namespace`
+                    // register `rumeaulibappconfig_driver` for any entity under namespace `RumeauLibAppConfig\Entity`
                     'RumeauLibAppConfig\Entity' => 'rumeaulibappconfig_driver',
                 ],
             ],

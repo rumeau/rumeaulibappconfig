@@ -1,9 +1,21 @@
 <?php
 return [
     'rumeaulib_appconfig' => [
+        /**
+         * Set the default entity for each configuration key
+         * Default: 'RumeauLibAppConfig\Entity\AppConfig'
+         */
         'config_entity_class' => 'RumeauLibAppConfig\Entity\AppConfig',
+
+        /**
+         * Set the entitymanager to use
+         * Default: 'doctrine.entitymanager.orm_default'
+         */
         'object_manager' => 'doctrine.entitymanager.orm_default',
 
+        /**
+         * Set the cache method to use, caches all config options
+         */
         'cache' => [
             'adapter'   => [
                 'name' => 'memory',
@@ -13,8 +25,20 @@ return [
             ]
         ],
 
-        'cache_key' => 'rumeaulib_appconfig',
-
+        /**
+         * Set which forms fieldsets should be added to configuration
+         * Default: array() (no fieldsets added)
+         * Add fieldsets specifying $name => $fieldset
+         *
+         * ie:
+         * 'forms' => [
+         *      'email_settings' => 'MyApp\Form\EmailConfigFieldset',
+         *      'seo_settings'   => 'MyApp\Form\SeoConfigFieldset',
+         *      'user_settings'  => 'MyUserModule\Form\UserConfigFieldset',
+         * ]
+         *
+         * Each fieldset is automatically added to the Config Options
+         */
         'forms' => [],
     ],
 ];
