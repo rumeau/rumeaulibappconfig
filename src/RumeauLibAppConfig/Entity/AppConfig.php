@@ -17,7 +17,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(
  *     name="app_config",
- *     uniqueConstraints={@ORM\UniqueConstraint(name="UniqueConfigKey", columns={"section","option"})}
+ *     uniqueConstraints={@ORM\UniqueConstraint(name="UniqueConfigKey", columns={"section_name","option_name"})}
  * )
  */
 class AppConfig
@@ -31,16 +31,14 @@ class AppConfig
     private $id;
 
     /**
-     * @var string|null
-     * @ORM\Column(nullable=true)
-     */
-    private $section = null;
-
-    /**
-     * @var string
-     * @ORM\Column(nullable=false)
+     * @ORM\Column(name="option_name", nullable=false)
      */
     private $option;
+
+    /**
+     * @ORM\Column(name="section_name", nullable=true)
+     */
+    private $section;
 
     /**
      * @var string

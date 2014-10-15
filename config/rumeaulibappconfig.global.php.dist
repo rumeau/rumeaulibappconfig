@@ -1,0 +1,20 @@
+<?php
+return [
+    'rumeaulib_appconfig' => [
+        'config_entity_class' => 'RumeauLibAppConfig\Entity\AppConfig',
+        'object_manager' => 'doctrine.entitymanager.orm_default',
+
+        'cache' => [
+            'adapter'   => [
+                'name' => 'memory',
+            ],
+            'plugins'   => [
+                'serializer',
+            ]
+        ],
+
+        'cache_key' => 'rumeaulib_appconfig',
+
+        'forms' => [],
+    ],
+];

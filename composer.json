@@ -1,0 +1,15 @@
+{
+    "name": "rumeau/rumeaulib-appconfig",
+    "description": "Application Configuration based on Database with Doctrine2 for Zend Framework 2",
+    "require": {
+        "doctrine/doctrine-orm-module": "0.*",
+        "zendframework/zendframework": "2.3.*"
+    },
+    "license": "MIT License",
+    "authors": [
+        {
+            "name": "Jean Rumeau",
+            "email": "rumeau@gmail.com"
+        }
+    ]
+}

@@ -36,6 +36,10 @@ class LoadConfigFormListener implements ListenerAggregateInterface
         $appConfigForms = $config['rumeaulib_appconfig']['forms'];
 
         foreach ($appConfigForms as $key => $fieldset) {
+            if ($fieldset === null) {
+                continue;
+            }
+
             $elements->add([
                 'type' => $fieldset,
                 'name' => $key

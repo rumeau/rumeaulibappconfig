@@ -4,114 +4,134 @@
     </div>
     <!-- /.col-lg-12 -->
 </div>
+
+<?php
+/**
+ * @var \Zend\Form\Form $form
+ * @var \Zend\Form\Fieldset $elements
+ * @var \Zend\Form\Fieldset $baseFieldset
+ */
+$form         = $this->form;
+$form->setAttribute('class', 'form-horizontal');
+$baseFieldset = $form->get('configelements');
+
+$elements     = $baseFieldset->getElements();
+$fieldsets    = $baseFieldset->getFieldsets();
+?>
+
 <!-- /.row -->
 <div class="row">
     <div class="col-lg-12">
-        <?php
-        /**
-         * @var \Zend\Form\Form $form
-         * @var \Zend\Form\Fieldset $elements
-         * @var \Zend\Form\Fieldset $baseFieldset
-         */
-        $form         = $this->form;
-        $form->setAttribute('class', 'form-horizontal');
-        $baseFieldset = $form->get('configelements');
+        <?php if (count($form->get('formcsrf')->getMessages())) { ?>
+            <div class="alert alert-error alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+                    &times;
+                </button>
+                <?= $this->translate('The form has expired, please try submitting the information again'); ?>
+            </div>
+        <?php } ?>
 
-        $elements     = $baseFieldset->getElements();
-        $fieldsets    = $baseFieldset->getFieldsets();
-
-        if (!count($elements) && !count($fieldsets)) {
-            echo '<h3>' . $this->translate('There is no configuration fields available') . '</h3>';
-        }
-        $hasActiveTab = false;
-        ?>
-        <?= $this->form(null, 'horizontal')->openTag($form); ?>
-        <!-- Nav tabs -->
-        <ul class="nav nav-tabs" role="tablist">
+        <div id="tabGroup-config" class="clearfix">
             <?php
-            if (count($elements)) {
-                $hasActiveTab = true;
-                ?>
-            <li class="active"><a href="#default-config" role="tab" data-toggle="tab"><?= $this->translate('Default'); ?></a>
-            </li>
-            <?php
+            if (!count($elements) && !count($fieldsets)) {
+                echo '<h3>' . $this->translate('There is no configuration fields available') . '</h3>';
             }
-            if (count($fieldsets)) {
-                /**
-                 * @var \Zend\Form\Fieldset $group
-                 */
-                foreach ($fieldsets as $group) {
-                    ?>
-                <li class="<?= !$hasActiveTab ? 'active' : ''; ?>">
-                    <a href="#<?= $group->getName(); ?>-config" role="tab" data-toggle="tab">
-                        <?php
-                        echo $group->getLabel() !== null
-                            ? $this->translate($group->getLabel())
-                            : $group->getName();
-                        ?>
-                    </a>
-                </li>
-                    <?php
-                    $hasActiveTab = true;
-                }
-            }
-            ?>
-        </ul>
-
-        <!-- Tab panes -->
-        <div class="tab-content">
-            <?php
             $hasActiveTab = false;
-            if (count($elements)) {
-                $hasActiveTab = true;
+            ?>
+            <?= $this->form(null, 'horizontal')->openTag($form); ?>
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                <?php
+                if (count($elements)) {
+                    $hasActiveTab = true;
+                    ?>
+                <li class="active"><a href="#default-config" role="tab" data-toggle="tab"><?= $this->translate('Default'); ?></a>
+                </li>
+                <?php
+                }
+                if (count($fieldsets)) {
+                    /**
+                     * @var \Zend\Form\Fieldset $group
+                     */
+                    foreach ($fieldsets as $group) {
+                        ?>
+                    <li class="<?= !$hasActiveTab ? 'active' : ''; ?>">
+                        <a href="#<?= $group->getName(); ?>-config" role="tab" data-toggle="tab">
+                            <?php
+                            echo $group->getLabel() !== null
+                                ? $this->translate($group->getLabel())
+                                : $group->getName();
+                            ?>
+                        </a>
+                    </li>
+                        <?php
+                        $hasActiveTab = true;
+                    }
+                }
                 ?>
-                <div class="tab-pane active" id="default-config">
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <?php
+                $hasActiveTab = false;
+                if (count($elements)) {
+                    $hasActiveTab = true;
+                    ?>
+                    <div class="tab-pane active" id="default-config">
+                        <?php
+                        foreach ($elements as $element) {
+                            echo $this->formrow($element);
+                        }
+                        ?>
+                    </div>
+                <?php
+                }
+                if (count($fieldsets)) {
+                    foreach ($fieldsets as $fieldset) {
+                        ?>
+                <div class="tab-pane<?= $hasActiveTab ? '' : ' active'; ?>" id="<?= $fieldset->getName(); ?>-config">
                     <?php
-                    foreach ($elements as $element) {
-                        echo $this->formrow($element);
+                    $groups = [];
+                    foreach ($fieldset->getElements() as $element) {
+                        if ($element->getOption('group')) {
+                            $groups[$element->getOption('group')][] = $element;
+                        } else {
+                            $groups['No Group'][] = $element;
+                        }
+                    }
+                    foreach ($groups as $groupName => $group) {
+                        ?>
+                        <div class="col-lg-6 col-md-6">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title"><?= $this->translate($groupName); ?></h3>
+                                </div>
+                                <div class="panel-body">
+                                    <?php foreach ($group as $element) {
+                                        echo $this->formrow($element);
+                                    }
+                                    ?>
+                                </div>
+                            </div>
+                        </div>
+                        <?php
                     }
                     ?>
                 </div>
-            <?php
-            }
-            if (count($fieldsets)) {
-                foreach ($fieldsets as $fieldset) {
-                    ?>
-            <div class="tab-pane<?= $hasActiveTab ? '' : ' active'; ?>" id="<?= $fieldset->getName(); ?>-config">
-                <?php
-                $groups = [];
-                foreach ($fieldset->getElements() as $element) {
-                    if ($element->getOption('group')) {
-                        $groups[$element->getOption('group')][] = $element;
-                    } else {
-                        $groups['No Group'][] = $element;
+                        <?php
+                        $hasActiveTab = true;
                     }
-                }
-                foreach ($groups as $groupName => $group) {
-                    ?>
-                    <div class="col-lg-6 col-md-6">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h3 class="panel-title"><?= $this->translate($groupName); ?></h3>
-                            </div>
-                            <div class="panel-body">
-                                <?php foreach ($group as $element) {
-                                    echo $this->formrow($element);
-                                }
-                                ?>
-                            </div>
-                        </div>
-                    </div>
-                    <?php
                 }
                 ?>
             </div>
-                    <?php
-                    $hasActiveTab = true;
-                }
-            }
-            ?>
         </div>
+
+        <div class="form-group clearfix">
+            <?= $this->formhidden($form->get('formcsrf')); ?>
+            <button type="submit" class="btn btn-success"><?= $this->translate('Save'); ?></button>
+        </div>
+
         <?= $this->form()->closeTag(); ?>
     </div>
 </div>

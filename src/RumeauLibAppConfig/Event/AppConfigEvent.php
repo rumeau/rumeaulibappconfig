@@ -31,8 +31,15 @@ class AppConfigEvent implements EventManagerAwareInterface, ServiceLocatorAwareI
         return $form;
     }
 
-    public function updateConfig($form, $data)
+    public function saveConfig($form, $data)
     {
-        $this->getEventManager()->trigger('update.appconfig', null, ['form' => $form, 'data' => $data]);
+        $this->getEventManager()->trigger('save.appconfig', null, ['form' => $form, 'data' => $data]);
+    }
+
+    public function updateConfig()
+    {
+        $serviceLocator = $this->getServiceLocator();
+
+        $this->getEventManager()->trigger('update.appconfig', null, ['serviceLocator' => $serviceLocator]);
     }
 } 
