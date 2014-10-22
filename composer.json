@@ -27,7 +27,7 @@
     },
     "autoload": {
         "psr-0": {
-            "RumeauLibAdmin": "src/"
+            "RumeauLibAppConfig": "src/"
         },
         "classmap": [
             "./Module.php"
