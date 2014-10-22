@@ -31,12 +31,12 @@ class AppConfig
     private $id;
 
     /**
-     * @ORM\Column(name="option_name", nullable=false)
+     * @ORM\Column(nullable=false, name="option_name")
      */
     private $option;
 
     /**
-     * @ORM\Column(name="section_name", nullable=true)
+     * @ORM\Column(nullable=true, name="section_name")
      */
     private $section;
 

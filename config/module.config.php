@@ -50,7 +50,7 @@ return [
         ],
         'invokables' => [
             'RumeauLibAppConfig\Event\AppConfigEvent' => 'RumeauLibAppConfig\Event\AppConfigEvent',
-        ]
+        ],
     ],
 
     'form_elements' => [
