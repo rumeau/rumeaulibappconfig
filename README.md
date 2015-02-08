@@ -1,5 +1,7 @@
 ## RumeauLibAppConfig ##
 
+[English Docs](README-en.md)
+
 Este módulo agrega una capa de configuración a traves de una base de 
 datos usando Doctrine2 como ORM.
 
